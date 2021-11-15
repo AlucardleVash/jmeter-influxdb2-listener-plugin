@@ -14,7 +14,7 @@ repositories {
 }
 
 sourceCompatibility = 11
-version = '1.3'
+version = '1.4'
 def title = 'JMeterInfluxDBListener'
 def archiveName = 'jmeter-plugin-influxdb2-listener'
 
@@ -29,6 +29,19 @@ def archiveName = 'jmeter-plugin-influxdb2-listener'
             }
         }
     }
+
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency { DependencyResolveDetails details ->
+
+            if (details.requested.group == 'com.squareup.okhttp3') {
+                details.useVersion "3.10.0"
+            }
+        }
+    }
+}
+
 
     dependencies {
         implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_core', version: '5.4.1'
@@ -46,6 +59,7 @@ def archiveName = 'jmeter-plugin-influxdb2-listener'
             withModule("org.apache.jmeter:jorphan", JMeterRule)
             withModule("org.apache.jmeter:ApacheJMeter", JMeterRule)
         }
+
     }
 
 jar {
